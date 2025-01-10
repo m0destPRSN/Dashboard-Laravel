@@ -26,3 +26,4 @@ Route::prefix('user')->group(function () {
     Route::post('/validation-phone', [UserController::class, 'validatePhone']);
     Route::post('/enter-user-info', [UserController::class, 'enterUserInfo']);
 });
+
