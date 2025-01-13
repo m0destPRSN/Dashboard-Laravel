@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Http\Requests\EnterUserInfoRequest;
-use App\Http\Requests\RegistrationPhoneRequest;
-use App\Http\Requests\ValidationPhoneRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\User\EnterUserInfoRequest;
+use App\Http\Requests\User\RegistrationPhoneRequest;
+use App\Http\Requests\User\ValidationPhoneRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 

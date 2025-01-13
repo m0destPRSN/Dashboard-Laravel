@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +27,4 @@ Route::prefix('user')->group(function () {
     Route::post('/enter-user-info', [UserController::class, 'enterUserInfo']);
 });
 
+//Route::post('location')
