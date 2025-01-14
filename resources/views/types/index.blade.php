@@ -21,7 +21,21 @@
         @endforeach
         </tbody>
     </table>
-    <a class="btn btn-primary" href="/types/add">
-        <img width="40px" height="40px" src="{{ asset('images/add.svg') }}" alt="Додати" /> Додати категорію
-    </a>
+
+    <div style="width: 400px; height: 400px">
+        <form method="post" action="{{ route('types.store') }}" class="mb-3">
+            @csrf
+            <div class="form-group">
+                <label for="type">Новий тип</label>
+                <input type="text" name="type" class="form-control" id="type" placeholder="Enter new type" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Додати</button>
+        </form>
+
+        @if(session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+    </div>
 @endsection

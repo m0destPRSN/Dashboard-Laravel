@@ -320,6 +320,11 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
+        ['header' => 'USERS'],
+        [
+            'text'=>'Users',
+            'url'=>'admin/dashboard'
+        ],
         ['header' => 'ADDING'],
         [
             'text' => 'Type',

@@ -19,26 +19,15 @@ class TypeController extends Controller
         return view('types.index', compact('types'));
     }
 
-    public function add()
-    {
-        return view('types.add');
-    }
-
     public function store(Request $request)
     {
-        if (auth()->check()) {
-            $validatedData = $request->validate([
-                'type' => 'required|string|max:255|unique:types,type',
-            ]);
-
-            Type::create([
-                'type' => $validatedData['type'],
-            ]);
-
-            return redirect()->route('types.index')->with('success', 'Тип успішно додано!');
-        }
-
-        return redirect()->route('login');
+        $validatedData = $request->validate([
+            'type' => 'required|string|max:255|unique:types,type',
+        ]);
+        Type::create([
+            'type' => $validatedData['type'],
+        ]);
+        return redirect()->route('types.index')->with('success', 'Тип успішно додано!');
     }
 
 }

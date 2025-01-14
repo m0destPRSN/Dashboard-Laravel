@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Type\TypeController;
+use \App\Http\Controllers\Category\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,9 @@ Route::middleware('admin')->get('admin/dashboard', [AdminController::class, 'ind
 
 Route::middleware('admin')->prefix('types')->group(function () {
     Route::get('', [TypeController::class, 'index'])->name('types.index');
-    Route::get('/add',[TypeController::class,'add'])->name('types.add');
     Route::post('/store',[TypeController::class,'store'])->name('types.store');
+});
+Route::middleware('admin')->prefix('categories')->group(function () {
+    Route::get('', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/store',[CategoryController::class,'store'])->name('categories.store');
 });
