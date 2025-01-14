@@ -21,5 +21,3 @@
 }
 
 ```
-# AdminLTE instalation
-**https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Installation**

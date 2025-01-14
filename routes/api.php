@@ -28,4 +28,4 @@ Route::prefix('user')->group(function () {
     Route::post('/enter-user-info', [UserController::class, 'enterUserInfo']);
 });
 
-Route::resource('location',LocationController::class);
+Route::post('location',[LocationController::class,'store']);

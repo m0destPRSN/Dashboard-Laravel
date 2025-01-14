@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Location;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Location\LocationRequest;
+use App\Models\Category;
+use App\Models\Location;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
@@ -10,32 +14,52 @@ class LocationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $locations=Location::all();
+        $types=Type::all();
+        $categories=Category::all();
+        return view('locations.index',compact('locations','types','categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(LocationRequest $request)
     {
-
+        $validatedData=$request->validated();
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $filename = $photo->hashName();
+            $photoPath = $photo->storeAs('photos', $filename, 'public');
+        }
+        Location::create([
+            'location' => $validatedData['location'],
+            'id_type' => $validatedData['id_type'],
+            'id_category' => $validatedData['id_category'],
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'photo_path' => $photoPath,
+            'start_time' => $validatedData['start_time'],
+            'end_time' => $validatedData['end_time'],
+        ]);
+        return response()->json(['success'=>'Локація додана'],201);
     }
 
     /**
@@ -46,7 +70,7 @@ class LocationController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
