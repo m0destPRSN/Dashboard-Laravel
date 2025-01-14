@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Type\TypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,10 @@ Auth::routes();
 
 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::middleware('admin')->get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
-
+Route::middleware('admin')->prefix('types')->group(function () {
+    Route::get('', [TypeController::class, 'index'])->name('types.index');
+    Route::get('/add',[TypeController::class,'add'])->name('types.add');
+    Route::post('/store',[TypeController::class,'store'])->name('types.store');
+});

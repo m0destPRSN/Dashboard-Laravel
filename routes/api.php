@@ -3,6 +3,7 @@
 use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Location\LocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,4 @@ Route::prefix('user')->group(function () {
     Route::post('/enter-user-info', [UserController::class, 'enterUserInfo']);
 });
 
-//Route::post('location')
+Route::resource('location',LocationController::class);

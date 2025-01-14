@@ -28,10 +28,4 @@
         </div>
     </form>
 @endsection
-{{--
-@section('auth_footer')
-    {{-- Registration link --}}
-    <!--<p class="my-0">
-        <a href="{{ route('register') }}">{{ __('Register a new account') }}</a>
-    </p>-->
-{{-- @endsection --}}
+
