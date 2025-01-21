@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Interfaces\IGetElasticSearchInformation;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Location extends Model
+class Location extends Model implements IGetElasticSearchInformation
 {
     use Searchable;
     use HasFactory;
@@ -23,5 +24,21 @@ class Location extends Model
             'description' => $this->description,
         ];
     }
-
+    public function getElasticSearchIndex()
+    {
+        return $this->table;
+    }
+    public function getElasticSearchType(){
+        return '_doc'; //можна потім будк якось змінити це
+    }
+    public function getElasticSearchableFields()
+    {
+        return [
+            'location',
+            'id_type^4',
+            'id_category^4',
+            'title^5',
+            'description^3',
+        ];
+    }
 }

@@ -11,9 +11,10 @@ trait Searchable
     public function bootSearchable()
     {
         if(config('services.search.enabled'))
-        //реєструємо для кожної моделі обсерв
+            //реєструємо для кожної моделі обсерв
             static::observe(ElasticSearchObserver::class);
     }
+
     public function elasticsearchIndex(Client $elasticsearchClient)
     {
         $elasticsearchClient->index([
