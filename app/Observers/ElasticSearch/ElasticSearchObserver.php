@@ -2,7 +2,6 @@
 
 namespace App\Observers\ElasticSearch;
 
-use App\Models\Location;
 use Elastic\Elasticsearch\Client;
 
 class ElasticSearchObserver
