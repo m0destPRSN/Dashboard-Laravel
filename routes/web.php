@@ -40,3 +40,5 @@ Route::middleware('admin')->prefix('locations')->group(function (){
     Route::get('',[LocationController::class,'index'])->name('locations.index');
 });
 
+Route::get('/search', [\App\Http\Controllers\Elastic\ElasticController::class, 'search'])->name('search');
+

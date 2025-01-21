@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "almasaeed2010/adminlte": "~3.0",
         "doctrine/dbal": "^3.9",
+        "elasticsearch/elasticsearch": "^8.17",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jeroennoten/laravel-adminlte": "^3.14",
@@ -59,7 +60,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
