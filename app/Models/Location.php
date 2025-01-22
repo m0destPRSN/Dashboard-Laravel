@@ -18,8 +18,8 @@ class Location extends Model implements IGetElasticSearchInformation
         return [
             'id' => $this->id,
             'location' => $this->location,
-            'name_type' => Type::find($this->id_type)->name,
-            'name_category' => Category::find( $this->id_category)->name,
+            'name_type' => Type::find($this->id_type)->type,
+            'name_category' => Category::find( $this->id_category)->category,
             'title' => $this->title,
             'description' => $this->description,
         ];
@@ -29,7 +29,7 @@ class Location extends Model implements IGetElasticSearchInformation
         return $this->table;
     }
     public function getElasticSearchType(){
-        return '_doc'; //можна потім будк якось змінити це
+        return '_doc'; //можна потім будк якось уніфікувати
     }
     public function getElasticSearchableFields()
     {
@@ -42,3 +42,4 @@ class Location extends Model implements IGetElasticSearchInformation
         ];
     }
 }
+

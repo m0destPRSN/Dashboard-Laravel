@@ -22,7 +22,7 @@ class ElasticSearchRepository implements LocationRepository
     {
         $items = $this->searchOnElasticsearch($query);
 
-        return $this->buildCollection($items, );
+        return $this->buildCollection($items);
     }
 
     private function searchOnElasticsearch(string $query = ''): array
@@ -39,8 +39,8 @@ class ElasticSearchRepository implements LocationRepository
                             'must' => [
                                 [
                                     'multi_match' => [
-                                        'query' => 'Magnam',//$query,
-                                        'fields' => 'description'//['location','id_type','id_category','title^5', 'description',],//$model->getElasticSearchableFields(),
+                                        'query' => $query,
+                                        'fields' => $model->getElasticSearchableFields(),
                                     ],
                                 ],
                             ],
@@ -48,7 +48,6 @@ class ElasticSearchRepository implements LocationRepository
                     ],
                 ],
             ]);
-            \Log::info('Elasticsearch response: ' . json_encode($response->asArray()));
 
             return $response->asArray();
         } catch (\Elastic\Elasticsearch\Exception\ClientResponseException $e) {
@@ -65,12 +64,10 @@ class ElasticSearchRepository implements LocationRepository
     private function buildCollection(array $items)
     {
         if (empty($items['hits']['hits'])) {
-            \Log::info('No results found for the query.');
             return collect();
         }
 
         $ids = Arr::pluck($items['hits']['hits'], '_id');
-
         return Location::findMany($ids)
             ->sortBy(function ($article) use ($ids) {
                 return array_search($article->getKey(), $ids);
