@@ -18,8 +18,8 @@ class Location extends Model implements IGetElasticSearchInformation
         return [
             'id' => $this->id,
             'location' => $this->location,
-            'id_type' =>  $this->id_type,
-            'id_category' => $this->id_category,
+            'name_type' => Type::find($this->id_type)->name,
+            'name_category' => Category::find( $this->id_category)->name,
             'title' => $this->title,
             'description' => $this->description,
         ];
@@ -35,8 +35,8 @@ class Location extends Model implements IGetElasticSearchInformation
     {
         return  [
             'location',
-            'id_type',
-            'id_category',
+            'name_type',
+            'name_category',
             'title^5',
             'description',
         ];
