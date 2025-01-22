@@ -40,5 +40,6 @@ Route::middleware('admin')->prefix('locations')->group(function (){
     Route::get('',[LocationController::class,'index'])->name('locations.index');
 });
 
-Route::get('/search', [\App\Http\Controllers\Elastic\ElasticController::class, 'search'])->name('search');
+Route::post('/search', [\App\Http\Controllers\Search\SearchController::class, 'search'])->name('search');
 
+Route::get('/test',[\App\Http\Controllers\Test\TestController::class,'testElasticSearchConnection']);

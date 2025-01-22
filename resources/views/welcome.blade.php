@@ -27,11 +27,15 @@
 
 <div class="container py-5">
     <form class="d-flex justify-content-center mb-4" action="{{ route('search') }}" method="POST">
+        @csrf
         <input type="search" id="default-search" name="query" class="form-control w-75 mr-2" placeholder="Search Mockups, Logos..." required />
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 
 </div>
+    @if(!empty($locations))
+        {{var_dump($locations)}}
+    @endif
 
 </body>
 </html>

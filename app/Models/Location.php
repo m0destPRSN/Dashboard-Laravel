@@ -18,7 +18,7 @@ class Location extends Model implements IGetElasticSearchInformation
         return [
             'id' => $this->id,
             'location' => $this->location,
-            'id_type' => $this->id_type,
+            'id_type' =>  $this->id_type,
             'id_category' => $this->id_category,
             'title' => $this->title,
             'description' => $this->description,
@@ -33,12 +33,12 @@ class Location extends Model implements IGetElasticSearchInformation
     }
     public function getElasticSearchableFields()
     {
-        return [
+        return  [
             'location',
-            'id_type^4',
-            'id_category^4',
+            'id_type',
+            'id_category',
             'title^5',
-            'description^3',
+            'description',
         ];
     }
 }
