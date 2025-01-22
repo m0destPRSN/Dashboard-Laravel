@@ -19,7 +19,7 @@ use \App\Http\Controllers\Location\LocationController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome.welcome');
 });
 
 Auth::routes();

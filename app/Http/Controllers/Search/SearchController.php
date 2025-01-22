@@ -24,15 +24,9 @@ class SearchController extends Controller
      */
     public function search(Request $request)
     {
-        // Отримуємо запит з параметрами
         $query = $request->get('query', '');
         $locations = $this->elasticSearchRepository->search($query);
 
-        // Повертаємо JSON-відповідь
-        return response()->json([
-            'success' => true,
-            'data' => $locations,
-            'message' => 'Locations retrieved successfully.',
-        ], 200);
+        return view('home.home_search',compact('locations'));
     }
 }
