@@ -22,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(Client::class, function ($app) {
             return ClientBuilder::create()
                 ->setHosts(config('services.search.hosts'))
+                ->setApiKey(config('services.search.api_key'))
+                ->setSSLVerification(false)
                 ->build();
         });
 

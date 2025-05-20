@@ -18,6 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'tg_id',
+        'tg_username',
         'first_name',
         'second_name',
         'phone',
@@ -44,4 +46,9 @@ class User extends Authenticatable
     protected $casts = [
         'phone_verified_at'=>'datetime'
     ];
+
+    public function getFormattedIdAttribute()
+    {
+        return str_pad($this->id, 6, '0', STR_PAD_LEFT);
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
@@ -18,24 +19,45 @@ class LoginController extends Controller
     {
         $request->validate([
             'phone' => 'required|digits:10',
+            'otp' => 'required|digits:6',
         ]);
 
-        $user = User::where('phone', $request->phone)->first();
+        $phone = $request->phone;
+        $otp = $request->otp;
 
+        // Verify OTP
+        $cachedOtp = Cache::get('otp_' . $phone);
+        if (!$cachedOtp || $cachedOtp != $otp) {
+            return back()->withErrors(['otp' => 'Invalid or expired OTP']);
+        }
+        Cache::forget('otp_' . $phone);
+
+        // Find or create user
+        $user = User::where('phone', $phone)->first();
         if (!$user) {
-            return back()->withErrors(['phone' => 'User not found']);
+            $user = User::create([
+                'phone' => $phone,
+                'name' => 'User_' . $phone,
+                'role' => 'user', // default role
+            ]);
+        }
+
+        Auth::login($user);
+
+        // Check if first_name or second_name is empty
+        if (empty($user->first_name) || empty($user->second_name)) {
+            return redirect()->route('profile.complete');
         }
 
         if ($user->role === 'admin') {
-            Auth::login($user);
             return redirect()->route('admin.dashboard');
         }
-
-        return back()->withErrors(['phone' => ' You are not admin']);
+        return redirect('/');
     }
+
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 }

@@ -6,6 +6,9 @@
 
     <title>Laravel</title>
 
+    <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
+
 </head>

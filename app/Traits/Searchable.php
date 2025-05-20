@@ -8,7 +8,7 @@ use App\Observers\ElasticSearch\ElasticSearchObserver;
 
 trait Searchable
 {
-    public function bootSearchable()
+    public static  function bootSearchable()
     {
         if(config('services.search.enabled'))
             //реєструємо для кожної моделі обсерв
