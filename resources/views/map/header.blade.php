@@ -9,22 +9,26 @@
         </div>
 
         {{-- Search form in the center --}}
-        <form class="form-inline d-flex flex-grow-1 mx-3" action="{{ route('search') }}" method="POST">
+        <form class="form-inline d-flex flex-grow-1 mx-3" action="{{ route('map.index') }}" method="POST">
             @csrf
             <input
-                    type="search"
-                    id="default-search"
-                    name="query"
-                    class="form-control mr-2 w-75"
-                    placeholder="Введіть ключову фразу..."
-                    required
+                type="search"
+                id="default-search"
+                name="query"
+                class="form-control mr-2 w-75"
+                placeholder="Введіть ключову фразу..."
+                required
             />
             <button type="submit" class="btn btn-primary">Пошук</button>
 
         </form>
-        <a href="{{ url('/map') }}" class="btn btn-primary" role="button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-map" viewBox="0 0 16 16">
-                <path d="M15.817.113A.5.5 0 0 0 15.5 0a.5.5 0 0 0-.16.027l-4.857 1.619-5.026-1.61a.5.5 0 0 0-.316 0l-5 1.5A.5.5 0 0 0 0 2v12a.5.5 0 0 0 .683.474l4.857-1.619 5.026 1.61a.5.5 0 0 0 .316 0l5-1.5A.5.5 0 0 0 16 14V2a.5.5 0 0 0-.183-.387zM6 2.434v10.132l-4 1.333V3.767l4-1.333zm1 10.132V2.434l4-1.333v10.132l-4 1.333zm5-1.333-4 1.333V3.767l4-1.333v8.799z"/>
+        {{-- Map button --}}
+        <a href="{{ url('/main') }}" class="btn btn-primary" role="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-browser" viewBox="0 0 16 16">
+                <path d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm2-1a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
+                <circle cx="3" cy="4" r="0.5"/>
+                <circle cx="5" cy="4" r="0.5"/>
+                <circle cx="7" cy="4" r="0.5"/>
             </svg>
         </a>
 
@@ -33,13 +37,13 @@
             @auth
                 <div class="dropdown">
                     <button
-                            class="btn btn-link text-white dropdown-toggle d-flex align-items-center"
-                            type="button"
-                            id="userDropdown"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                            style="text-decoration: none;"
+                        class="btn btn-link text-white dropdown-toggle d-flex align-items-center"
+                        type="button"
+                        id="userDropdown"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        style="text-decoration: none;"
                     >
                         <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;">
                             <circle cx="12" cy="8" r="4" />

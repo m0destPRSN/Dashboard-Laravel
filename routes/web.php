@@ -8,6 +8,10 @@ use App\Http\Controllers\Type\TypeController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Location\LocationController;
 use App\Http\Controllers\TurboSMS\TurboSMSController;
+use App\Http\Controllers\Map\MapController;
+use App\Http\Controllers\Search\SearchController;
+use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +20,10 @@ use App\Http\Controllers\TurboSMS\TurboSMSController;
 */
 
 Route::get('/', function () {
+    return redirect()->route('map');
+});
+
+Route::get('/main', function () {
     return view('welcome.welcome');
 });
 
@@ -35,11 +43,11 @@ Route::get('/otp', function (\Illuminate\Http\Request $request) {
 })->name('otp.form');
 
 // Profile completion
-Route::get('/profile/complete', [App\Http\Controllers\Auth\ProfileController::class, 'showCompleteForm'])->name('profile.complete');
-Route::post('/profile/complete', [App\Http\Controllers\Auth\ProfileController::class, 'complete'])->name('profile.complete.save');
+Route::get('/profile/complete', [ProfileController::class, 'showCompleteForm'])->name('profile.complete');
+Route::post('/profile/complete', [ProfileController::class, 'complete'])->name('profile.complete.save');
 
 // Home
-Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('home', [HomeController::class, 'index'])->name('home');
 
 // Admin routes
 Route::middleware('admin')->group(function () {
@@ -58,7 +66,7 @@ Route::middleware('admin')->group(function () {
 });
 
 // Search and test
-Route::post('/search', [\App\Http\Controllers\Search\SearchController::class, 'search'])->name('search');
+Route::post('/search', [SearchController::class, 'search'])->name('search');
 Route::get('/test', [\App\Http\Controllers\Test\TestController::class, 'testElasticSearchConnection']);
 
 // Admin auth
@@ -68,3 +76,10 @@ Route::post('admin/login', [\App\Http\Controllers\Admin\Auth\LoginController::cl
 // Telegram auth
 Route::post('/telegram/login', [TelegramController::class, 'authByTelegram'])->name('telegram.login');
 Route::get('/telegram/index', [TelegramController::class, 'index'])->name('telegram.index');
+
+// Google maps
+
+Route::get('/map', function () {
+    return view('map.map_search');
+})->name('map');
+Route::post('/map', [MapController::class, 'search'])->name('map.index');
