@@ -9,6 +9,6 @@ class Type extends Model
 {
     use HasFactory;
     protected $table = 'types';
-    protected $fillable=['type'];
+    protected $fillable = ['type', 'photo_path'];
     public $timestamps = false;
 }

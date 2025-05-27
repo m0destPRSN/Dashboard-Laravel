@@ -52,13 +52,21 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 // Admin routes
 Route::middleware('admin')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::prefix('types')->group(function () {
-        Route::get('', [TypeController::class, 'index'])->name('types.index');
-        Route::post('/store', [TypeController::class, 'store'])->name('types.store');
+    Route::prefix('types')->name('types.')->group(function () {
+        Route::get('', [TypeController::class, 'index'])->name('index');
+        Route::get('/create', [TypeController::class, 'create'])->name('create'); // New
+        Route::post('/store', [TypeController::class, 'store'])->name('store');
+        Route::get('/{type}/edit', [TypeController::class, 'edit'])->name('edit');
+        Route::put('/{type}', [TypeController::class, 'update'])->name('update');
+        Route::delete('/{type}', [TypeController::class, 'destroy'])->name('destroy');
     });
-    Route::prefix('categories')->group(function () {
-        Route::get('', [CategoryController::class, 'index'])->name('categories.index');
-        Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
+    Route::prefix('categories')->name('categories.')->group(function () {
+        Route::get('', [CategoryController::class, 'index'])->name('index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('create'); // New
+        Route::post('/store', [CategoryController::class, 'store'])->name('store');
+        Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit');
+        Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
+        Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
     });
     Route::prefix('locations')->group(function () {
         Route::get('', [LocationController::class, 'index'])->name('locations.index');
@@ -86,10 +94,10 @@ Route::post('/map', [MapController::class, 'search'])->name('map.index');
 
 // locations
 
-Route::get('/create', function () {
+Route::get('/create', function () { // This seems like a general create route, ensure it doesn't conflict
     return view('locations.create_location');
-})->name('create');
+})->name('create'); // Be careful with generic route names like 'create'
 
-Route::get('/create', [LocationController::class, 'create'])->name('create');
+Route::get('/locations/create', [LocationController::class, 'create'])->name('locations.create'); // More specific
 
 Route::post('/locations', [LocationController::class, 'store'])->name('locations.store');

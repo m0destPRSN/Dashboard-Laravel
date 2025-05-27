@@ -63,9 +63,9 @@ return [
     |
     */
 
-    'logo' => '',
+    'logo' => 'Admin',
     'logo_img' => 'public/images/logo.png',
-    'logo_img_class' => 'brand-image',
+    'logo_img_class' => 'brand-image ml-0',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
@@ -114,7 +114,7 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'public/images/logo.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
