@@ -1,5 +1,5 @@
 <header class="bg-dark text-white py-2">
-    <div class="container-lg d-flex justify-content-between align-items-center">
+    <div class="container-lg d-flex align-items-center">
 
         {{-- Logo on the left --}}
         <div class="d-flex align-items-center">
@@ -23,7 +23,7 @@
 
         </form>
         {{-- Map button --}}
-        <a href="{{ url('/main') }}" class="btn btn-primary" role="button">
+        <a href="{{ url('/main') }}" class="btn btn-primary mx-1" role="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-browser" viewBox="0 0 16 16">
                 <path d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm2-1a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
                 <circle cx="3" cy="4" r="0.5"/>
@@ -79,6 +79,12 @@
                 <a href="{{ route('login') }}" class="btn btn-link text-white">Увійти</a>
             @endauth
         </div>
+        <a href="{{url('/create')}}" class="btn btn-primary" role="button" style:="" style="
+        position: absolute;
+    left: 97%;
+">
+            +
+        </a>
     </div>
 
 </header>

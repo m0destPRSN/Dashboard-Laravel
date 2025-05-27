@@ -1,5 +1,5 @@
 <header class="bg-dark text-white py-2">
-    <div class="container-lg d-flex justify-content-between align-items-center">
+    <div class="container-lg d-flex align-items-center">
 
         {{-- Logo on the left --}}
         <div class="d-flex align-items-center">
@@ -12,34 +12,36 @@
         <form class="form-inline d-flex flex-grow-1 mx-3" action="{{ route('search') }}" method="POST">
             @csrf
             <input
-                    type="search"
-                    id="default-search"
-                    name="query"
-                    class="form-control mr-2 w-75"
-                    placeholder="Введіть ключову фразу..."
-                    required
+                type="search"
+                id="default-search"
+                name="query"
+                class="form-control mr-2 w-75"
+                placeholder="Введіть ключову фразу..."
+                required
             />
             <button type="submit" class="btn btn-primary">Пошук</button>
-
         </form>
-        <a href="{{ url('/map') }}" class="btn btn-primary" role="button">
+        <div>
+        {{-- Map button on the right --}}
+        <a href="{{ url('/map') }}" class="btn btn-primary mx-1" role="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-map" viewBox="0 0 16 16">
                 <path d="M15.817.113A.5.5 0 0 0 15.5 0a.5.5 0 0 0-.16.027l-4.857 1.619-5.026-1.61a.5.5 0 0 0-.316 0l-5 1.5A.5.5 0 0 0 0 2v12a.5.5 0 0 0 .683.474l4.857-1.619 5.026 1.61a.5.5 0 0 0 .316 0l5-1.5A.5.5 0 0 0 16 14V2a.5.5 0 0 0-.183-.387zM6 2.434v10.132l-4 1.333V3.767l4-1.333zm1 10.132V2.434l4-1.333v10.132l-4 1.333zm5-1.333-4 1.333V3.767l4-1.333v8.799z"/>
             </svg>
         </a>
+        </div>
 
         {{-- Auth buttons on the right --}}
         <div>
             @auth
                 <div class="dropdown">
                     <button
-                            class="btn btn-link text-white dropdown-toggle d-flex align-items-center"
-                            type="button"
-                            id="userDropdown"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                            style="text-decoration: none;"
+                        class="btn btn-link text-white dropdown-toggle d-flex align-items-center"
+                        type="button"
+                        id="userDropdown"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        style="text-decoration: none;"
                     >
                         <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;">
                             <circle cx="12" cy="8" r="4" />
@@ -75,6 +77,12 @@
                 <a href="{{ route('login') }}" class="btn btn-link text-white">Увійти</a>
             @endauth
         </div>
+        <a href="{{url('/create')}}" class="btn btn-primary" role="button" style="
+        position: absolute;
+    left: 97%;
+">
+            +
+        </a>
     </div>
 
 </header>
@@ -84,14 +92,13 @@
         const dropdownMenu = document.querySelector('#userDropdown + .dropdown-menu');
 
         dropdownButton.addEventListener('click', function () {
-            dropdownMenu.style.opacity = '0'; // приховуємо меню
+            dropdownMenu.style.opacity = '0';
             setTimeout(() => {
                 dropdownMenu.style.transform = 'translate3d(-65px, 44px, 0px)';
                 dropdownMenu.style.position = 'absolute';
-                dropdownMenu.style.opacity = '1'; // плавно показуємо меню
+                dropdownMenu.style.opacity = '1';
                 dropdownMenu.style.transition = 'opacity 0.15s ease-in-out';
-            }, 10); // 10ms затримки для рендера Bootstrap
+            }, 10);
         });
     });
 </script>
-

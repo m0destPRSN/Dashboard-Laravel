@@ -31,15 +31,11 @@ class LocationController extends Controller
      */
     public function create()
     {
-
+        $types = Type::all();
+        $categories = Category::all();
+        return view('locations.create_location', compact('types', 'categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store(LocationRequest $request)
     {
         $validatedData=$request->validated();
@@ -59,7 +55,7 @@ class LocationController extends Controller
             'start_time' => $validatedData['start_time'],
             'end_time' => $validatedData['end_time'],
         ]);
-        return response()->json(['success'=>'Локація додана'],201);
+        return response()->redirectToRoute('map')->with('success', 'Location created successfully!');
     }
 
     /**

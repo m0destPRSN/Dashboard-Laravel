@@ -83,3 +83,13 @@ Route::get('/map', function () {
     return view('map.map_search');
 })->name('map');
 Route::post('/map', [MapController::class, 'search'])->name('map.index');
+
+// locations
+
+Route::get('/create', function () {
+    return view('locations.create_location');
+})->name('create');
+
+Route::get('/create', [LocationController::class, 'create'])->name('create');
+
+Route::post('/locations', [LocationController::class, 'store'])->name('locations.store');
