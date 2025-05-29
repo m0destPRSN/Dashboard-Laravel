@@ -43,6 +43,7 @@ class CategoryController extends Controller
         $photoPath = null;
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('categories_photos', 'public');
+
         }
 
         Category::create([
@@ -102,4 +103,6 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Категорію успішно видалено!');
     }
+
+
 }

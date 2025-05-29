@@ -1,6 +1,6 @@
 @include('head.head_doc')
 <body class="bg-light">
-@include('header.header')
+@include('header.header', ['icon' => 'map', 'iconLink' => url('/map')])
 
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">

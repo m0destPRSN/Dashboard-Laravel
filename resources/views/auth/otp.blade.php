@@ -130,3 +130,8 @@
         });
     </script>
 @endsection
+<style>
+    .hidden-element {
+        display: none;
+    }
+</style>

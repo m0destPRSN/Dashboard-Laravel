@@ -19,7 +19,11 @@
         <button type="submit" class="btn btn-secondary btn-block">Відправити код</button>
     </form>
 @endsection
-
+<style>
+    .hidden-element {
+        display: none;
+    }
+</style>
 @section('auth_footer')
     @if(session('error'))
         <div class="text-danger">{{ session('error') }}</div>

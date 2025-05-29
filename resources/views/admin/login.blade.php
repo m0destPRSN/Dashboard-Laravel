@@ -40,3 +40,8 @@
         </div>
     </form>
 @endsection
+<style>
+    .hidden-element {
+        display: none;
+    }
+</style>

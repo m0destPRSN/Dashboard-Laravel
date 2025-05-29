@@ -26,8 +26,12 @@ class SearchController extends Controller
     {
         $query = $request->get('query', '');
 
-        $locations = $this->locationRepository->search($query);
+        $types = $request->has('type') ? explode(',', $request->get('type')) : [];
+        $categories = $request->has('category') ? explode(',', $request->get('category')) : [];
 
-        return view('home.home_search',compact('locations'));
+        $locations = $this->locationRepository->search($query, $types, $categories);
+
+        return view('home.home_search', compact('locations'));
     }
+
 }

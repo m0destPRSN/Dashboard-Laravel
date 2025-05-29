@@ -31,6 +31,7 @@
                 <td>{{ $category->id }}</td>
                 <td>
                     @if($category->photo_path)
+
                         <img src="{{ asset('storage/' . $category->photo_path) }}" alt="{{ $category->category }}" style="width: 50px; height: 50px; object-fit: cover;">
                     @else
                         N/A

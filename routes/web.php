@@ -20,7 +20,7 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('map');
+    return view('map.map_search');
 });
 
 Route::get('/main', function () {
@@ -54,7 +54,7 @@ Route::middleware('admin')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::prefix('types')->name('types.')->group(function () {
         Route::get('', [TypeController::class, 'index'])->name('index');
-        Route::get('/create', [TypeController::class, 'create'])->name('create'); // New
+        Route::get('/create', [TypeController::class, 'create'])->name('create');
         Route::post('/store', [TypeController::class, 'store'])->name('store');
         Route::get('/{type}/edit', [TypeController::class, 'edit'])->name('edit');
         Route::put('/{type}', [TypeController::class, 'update'])->name('update');
@@ -62,7 +62,7 @@ Route::middleware('admin')->group(function () {
     });
     Route::prefix('categories')->name('categories.')->group(function () {
         Route::get('', [CategoryController::class, 'index'])->name('index');
-        Route::get('/create', [CategoryController::class, 'create'])->name('create'); // New
+        Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
         Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit');
         Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
@@ -74,7 +74,7 @@ Route::middleware('admin')->group(function () {
 });
 
 // Search and test
-Route::post('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::get('/test', [\App\Http\Controllers\Test\TestController::class, 'testElasticSearchConnection']);
 
 // Admin auth
@@ -87,17 +87,23 @@ Route::get('/telegram/index', [TelegramController::class, 'index'])->name('teleg
 
 // Google maps
 
-Route::get('/map', function () {
-    return view('map.map_search');
-})->name('map');
-Route::post('/map', [MapController::class, 'search'])->name('map.index');
+// Remove or comment out the previous closure-based '/map' route to avoid conflict
+// Route::get('/map', function () {
+//     return view('map.map_search');
+// })->name('map');
 
+// Define the '/map' route to use MapController@search and name it 'map'
+Route::get('/map', [MapController::class, 'index'])->name('map');
+
+Route::get('/map/search', [MapController::class, 'search'])->name('map');
 // locations
 
-Route::get('/create', function () { // This seems like a general create route, ensure it doesn't conflict
+Route::get('/create', function () {
     return view('locations.create_location');
-})->name('create'); // Be careful with generic route names like 'create'
+})->name('create');
 
-Route::get('/locations/create', [LocationController::class, 'create'])->name('locations.create'); // More specific
+Route::get('/locations/create', [LocationController::class, 'create'])->name('locations.create')->middleware('auth');;
 
 Route::post('/locations', [LocationController::class, 'store'])->name('locations.store');
+
+Route::get('/locations/{id}', [LocationController::class, 'show'])->name('locations.single');

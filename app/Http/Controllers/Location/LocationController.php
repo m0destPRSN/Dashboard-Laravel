@@ -66,7 +66,11 @@ class LocationController extends Controller
      */
     public function show($id)
     {
+        $location = Location::findOrFail($id);
+        $type = Type::find($location->id_type);
+        $category = Category::find($location->id_category);
 
+        return view('locations.single', compact('location', 'type', 'category'));
     }
 
     /**
@@ -102,4 +106,6 @@ class LocationController extends Controller
     {
         //
     }
+
+
 }

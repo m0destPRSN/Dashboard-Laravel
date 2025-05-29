@@ -62,8 +62,7 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Basic-Configuration
     |
     */
-
-    'logo' => 'Admin',
+    'logo' => '<p class="hidden-element">Admin</p>',
     'logo_img' => 'public/images/logo.png',
     'logo_img_class' => 'brand-image ml-0',
     'logo_img_xl' => null,
