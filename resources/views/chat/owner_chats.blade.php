@@ -17,20 +17,33 @@
                     @else
                         <div class="list-group list-group-flush">
                             @foreach($chats as $chat)
-                                @php
-                                    $isOwner = auth()->id() === $chat['location']->user_id;
-                                    $chatUrl = $isOwner
-                                        ? route('chat.owner', ['location' => $chat['location']->id, 'customer' => $chat['customer']->id])
-                                        : route('chat.location', ['location' => $chat['location']->id]);
-                                @endphp
-                                <a href="{{ $chatUrl }}" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">{{ $chat['customer']->first_name }} {{ $chat['customer']->second_name }}</h5>
-                                        <small>{{ $chat['last_message']->created_at->diffForHumans() }}</small>
-                                    </div>
-                                    <p class="mb-1">Location: {{ $chat['location']->title }}</p>
-                                    <small class="text-muted">{{ Str::limit($chat['last_message']->message, 50) }}</small>
-                                </a>
+                                @if($chat['type'] === 'location')
+                                    @php
+                                        $isOwner = auth()->id() === $chat['location']->user_id;
+                                        $chatUrl = $isOwner
+                                            ? route('chat.owner', ['location' => $chat['location']->id, 'customer' => $chat['customer']->id])
+                                            : route('chat.location', ['location' => $chat['location']->id]);
+                                    @endphp
+                                    <a href="{{ $chatUrl }}" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">{{ $chat['customer']->first_name }} {{ $chat['customer']->second_name }}</h5>
+                                            <small>{{ $chat['last_message']->created_at->diffForHumans() }}</small>
+                                        </div>
+                                        <p class="mb-1">Location: {{ $chat['location']->title }}</p>
+                                        <small class="text-muted">{{ Str::limit($chat['last_message']->message, 50) }}</small>
+                                    </a>
+                                @elseif($chat['type'] === 'user')
+                                    @php
+                                        $chatUrl = route('user-chat.show', ['otherUser' => $chat['other_user']->id]);
+                                    @endphp
+                                    <a href="{{ $chatUrl }}" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">{{ $chat['other_user']->first_name }} {{ $chat['other_user']->second_name }}</h5>
+                                            <small>{{ $chat['last_message']->created_at->diffForHumans() }}</small>
+                                        </div>
+                                        <small class="text-muted">{{ Str::limit($chat['last_message']->message, 50) }}</small>
+                                    </a>
+                                @endif
                             @endforeach
                         </div>
                     @endif

@@ -147,25 +147,30 @@ Route::middleware('auth')->group(function () {
     // Show chat for owner with a specific user (customer) for a location
     Route::get('/owner/chat/location/{location}/user/{customer}', [ChatController::class, 'showOwnerChat'])->name('chat.owner');
 
-    // AJAX: Fetch messages for a location chat
-    Route::get('/chat/{location}/{customer}', [ChatController::class, 'fetchMessages'])->name('chat.fetchMessages');
-
-    // AJAX: Send a message in a location chat
-    Route::post('/chat/{location}', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
-
-    // List all chats for the authenticated user
-    Route::get('/chats', [ChatController::class, 'list'])->name('chat.list');
-
     // --- User-to-user chat routes ---
 
-    // Show user-to-user chat page
-    Route::get('/chat/user/{otherUser}', [UserChatController::class, 'show'])->name('user-chat.show');
+    // Show user-to-user chat page (MUST be before the catch-all /chat/{location}/{customer})
+    Route::get('/chat/user/{otherUser}', [UserChatController::class, 'show'])
+        ->whereNumber('otherUser')
+        ->name('user-chat.show');
 
     // AJAX: fetch messages for a conversation (user-to-user, or any one-on-one chat)
     Route::get('/chat/conversation/{conversation}/messages', [UserChatController::class, 'fetchMessages'])->name('user-chat.fetch');
 
     // AJAX: send a message in a conversation
     Route::post('/chat/conversation/{conversation}/messages/send', [UserChatController::class, 'sendMessage'])->name('user-chat.send');
+
+    // AJAX: Fetch messages for a location chat
+    Route::get('/chat/{location}/{customer}', [ChatController::class, 'fetchMessages'])
+        ->whereNumber('location')
+        ->whereNumber('customer')
+        ->name('chat.fetchMessages');
+
+    // AJAX: Send a message in a location chat
+    Route::post('/chat/{location}', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
+
+    // List all chats for the authenticated user
+    Route::get('/chats', [ChatController::class, 'list'])->name('chat.list');
 });
 
 

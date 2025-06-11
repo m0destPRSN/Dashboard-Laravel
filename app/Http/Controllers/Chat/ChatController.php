@@ -133,7 +133,11 @@ class ChatController extends Controller
         $userId = auth()->id();
 
         // Get all conversations where the user is a participant
-        $participations = \App\Models\Participation::where('user_id', $userId)->with('conversation')->get();
+        $participations = \App\Models\Participation::where('user_id', $userId)
+            ->with(['conversation', 'conversation.location', 'conversation.participants.user', 'conversation.messages' => function($q) {
+                $q->latest();
+            }])
+            ->get();
 
         $chats = [];
 
@@ -141,31 +145,54 @@ class ChatController extends Controller
             $conversation = $participation->conversation;
             if (!$conversation) continue;
 
-            // Get location (may be null if user-to-user chat)
-            $location = $conversation->location;
-
-            // Get the other participant (for owner: customer, for customer: owner)
-            $otherParticipation = $conversation->participants()->where('user_id', '!=', $userId)->first();
-            $customer = $otherParticipation ? $otherParticipation->user : null;
-
             // Get last message
-            $lastMessage = $conversation->messages()->latest()->first();
+            $lastMessage = $conversation->messages->sortByDesc('created_at')->first();
+            if (!$lastMessage) continue;
 
-            // Fallbacks
-            if (!$location || !$customer || !$lastMessage) continue;
+            if ($conversation->location) {
+                // User-location chat
+                // Get the other participant (customer or owner)
+                $otherParticipation = $conversation->participants()->where('user_id', '!=', $userId)->first();
+                $customer = $otherParticipation ? $otherParticipation->user : null;
 
-            $chats[] = [
-                'location' => $location,
-                'customer' => $customer,
-                'last_message' => (object)[
-                    'message' => $lastMessage->body,
-                    'created_at' => $lastMessage->created_at,
-                ],
-            ];
+                if (!$customer) continue;
+
+                $chats[] = [
+                    'type' => 'location',
+                    'location' => $conversation->location,
+                    'customer' => $customer,
+                    'last_message' => (object)[
+                        'message' => $lastMessage->body,
+                        'created_at' => $lastMessage->created_at,
+                    ],
+                ];
+            } else {
+                // User-user chat
+                // Get the other participant
+                $otherParticipation = $conversation->participants()->where('user_id', '!=', $userId)->first();
+                $otherUser = $otherParticipation ? $otherParticipation->user : null;
+
+                if (!$otherUser) continue;
+
+                $chats[] = [
+                    'type' => 'user',
+                    'other_user' => $otherUser,
+                    'conversation' => $conversation,
+                    'last_message' => (object)[
+                        'message' => $lastMessage->body,
+                        'created_at' => $lastMessage->created_at,
+                    ],
+                ];
+            }
         }
 
+        // Sort by last_message date desc
+        $chats = collect($chats)->sortByDesc(function ($chat) {
+            return $chat['last_message']->created_at;
+        })->values();
+
         return view('chat.owner_chats', [
-            'chats' => collect($chats),
+            'chats' => $chats,
         ]);
     }
 }
