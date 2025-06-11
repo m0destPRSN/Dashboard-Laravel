@@ -64,8 +64,8 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="photo">Фото</label>
-                            <input type="file" class="form-control-file" id="photo" name="photo">
+                            <label for="photos">Фото (можна вибрати декілька)</label>
+                            <input type="file" class="form-control-file" id="photos" name="photos[]" multiple>
                         </div>
 
                         <div class="form-group mb-3">

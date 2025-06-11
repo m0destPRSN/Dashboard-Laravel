@@ -24,6 +24,6 @@ class ProfileController extends Controller
         $user->second_name = $request->second_name;
         $user->save();
 
-        return redirect()->route('home');
+        return redirect()->route('map');
     }
 }

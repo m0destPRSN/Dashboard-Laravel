@@ -13,7 +13,7 @@
             $icon = $icon ?? 'map';
             $iconLink = $iconLink ?? url('/map');
             $query = $query ?? request('query');
-            $searchAction = ($icon === 'browser') ? route('map') : route('search');
+            $searchAction = ($icon === 'browser') ? url('map/search') : route('search');
         @endphp
 
         <form class="form-inline d-flex flex-grow-1 mx-3" action="{{ $searchAction }}" method="GET">
@@ -110,8 +110,17 @@
                             <div class="text-white">{{ auth()->user()->first_name }} {{ auth()->user()->second_name }}</div>
                             <div class="dropdown-divider"></div>
                             <form method="POST" action="{{ route('logout') }}">@csrf
-                                <button type="submit" class="btn btn-danger btn-block">Вийти</button>
+                                <button type="submit" class="btn btn-danger btn-block mt-3">Вийти</button>
                             </form>
+                            <div class="dropdown-divider mt-3"></div>
+                            <ul class="list-unstyled mt-3" style="min-width: 250px;">
+                                <li class="nav-item mt-2">
+                                    <a href="{{ route('locations.my') }}" class="text-white">Мої локації</a>
+                                </li>
+                                <li class="nav-item mt-2">
+                                    <a class="text-white" href="{{ route('chat.list') }}">Повідомлення</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

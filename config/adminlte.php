@@ -339,6 +339,15 @@ return [
             'text' => 'Locations',
             'url' => 'locations',
         ],
+        ['header' => 'Посилання'],
+        [
+            'text' => 'Посилання на головній',
+            'url' => 'posts',
+        ],
+        [
+            'text' => 'Посилання на мапі',
+            'url' => 'links-on-map',
+        ]
     ],
 
     /*

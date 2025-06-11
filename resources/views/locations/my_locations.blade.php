@@ -34,7 +34,7 @@
     </div>
 @else
     <div class="d-flex justify-content-center m-3">
-        <p>Нічого не знайдено</p>
+        <p>У вас ще немає локацій</p>
     </div>
 @endif
 

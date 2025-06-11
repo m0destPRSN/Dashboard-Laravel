@@ -22,7 +22,7 @@ class CreateLocationsTable extends Migration
             $table->foreign('id_category')->references('id')->on('categories');
             $table->string('title');
             $table->string('description')->nullable();
-            $table->string('photo_path')->nullable();
+            $table->text('photo_paths')->nullable();
             $table->dateTimeTz('start_time')->nullable();//'2023-11-22 13:37:00'
             $table->dateTimeTz('end_time')->nullable();//'2023-11-22 13:37:00'
             $table->timestamps();

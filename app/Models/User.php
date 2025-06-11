@@ -51,4 +51,20 @@ class User extends Authenticatable
     {
         return str_pad($this->id, 6, '0', STR_PAD_LEFT);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function participations()
+    {
+        return $this->hasMany(Participation::class);
+    }
+
+// Optional: conversations via participations
+    public function conversations()
+    {
+        return $this->belongsToMany(Conversation::class, 'participations');
+    }
 }

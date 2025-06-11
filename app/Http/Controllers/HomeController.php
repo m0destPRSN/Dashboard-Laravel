@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    public function welcome()
+    {
+        $posts = \App\Models\Post::latest()->get();
+        return view('welcome.welcome', compact('posts'));
+    }
     /**
      * Create a new controller instance.
      *
@@ -13,7 +18,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->only('index'); // Only protect the dashboard
     }
 
     /**
@@ -25,4 +30,6 @@ class HomeController extends Controller
     {
         return view('home.home');
     }
+
+
 }
